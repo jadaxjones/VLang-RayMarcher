@@ -20,6 +20,13 @@ as the json file and a picture demonstrating the feature. At the bottom there wi
 reflection with detailing, how the feature was created, and changes I had to make to scene files or other files in order to get the feature to be 
 implemented correctly.
 
+
+| Month    | Savings |
+| -------- | ------- |
+| January  | $250    |
+| February | $80     |
+| March    | $420    |
+
 |     |  |
 | -------- | ------- |
 | Name  | Jada Jones    |

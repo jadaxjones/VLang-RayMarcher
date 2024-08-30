@@ -27,12 +27,6 @@ implemented correctly.
 | Language | V Language     |
 | Text-Editor    | VSCode    |
 
-|     |  |
-| -------- | ------- |
-| Name  | Jada Jones    |
-| OS | MacBookPro     |
-| Language    | VLang    |
-| Text-Editor   | VSCode |
 
 
 Link to resource I used: https://iquilezles.org/articles/raymarchingdf/ 
@@ -67,8 +61,7 @@ you got one implementation down, just changing one thing about another allowed i
 of d1 and d2. When I think about this, I think about a venn diagram, specifically the middel part of the venn diagram, where 
 the two circles intersect. I again, went into scene.v and created a inter_op object. 
 
-
-![A picture showing the intersection feature!](output/Final_inter.png)
+![Final_inter](https://github.com/user-attachments/assets/3d112f07-49d6-4b88-bb9e-5124973945de)
 
 
 Union
@@ -78,7 +71,9 @@ you could just place an object on top of another without having to do the functi
 However, when it came to the smoothing of the union I saw the benefit greatly. This implementation was good
 but I felt the subtraction and intersection implementations were cooler. 
 
-![A picture showing the union feature!](output/Final_uni.png)
+
+![Final_uni](https://github.com/user-attachments/assets/fb54c67f-22aa-47f4-940a-05e8ca1deb26)
+
 
 
 Displacement
@@ -89,9 +84,8 @@ I tried out multiple variations and will use some of them in the creative artifa
 the 0.1 at the beginning of the return in the function for displacement, then it gives a weird design. I will use that variation for the final creative artifact.
 
 
-Code for Displacement: 
+![Final_displace](https://github.com/user-attachments/assets/8d2c243b-913a-44ea-b0eb-a78f61e04ae4)
 
-![A picture showing the displacement feature!](output/Final_displace.png)
 
 
 Smoothing Union
@@ -105,9 +99,10 @@ to help me make the blend material for the function. Once I finally got it to wo
 best implementation by far because of how cool the color blend looks. I then made a new durface with the blended material, and called
 that in with the distance so that it would take that color rather than two seperate colors of the objects. 
 
-Code for Smoothing Union: 
 
-![A picture showing the smooth union feature!](output/Final_smooth_uni.png)
+![Final_smooth_uni](https://github.com/user-attachments/assets/4cdbe79c-97c1-492a-a0f7-f7b4f2a4a030)
+
+
 
 
 Limited Repetition
@@ -120,9 +115,7 @@ would one taje forever to run, and take up alot of space on my laptop. And for w
 works perfectly. Also with this you can add multuiple operations under it. I have also added subtraction operations with a box
 and a sphere under it and had that as limited repetition as well. 
 
-Code for Limited Repetition: 
-
-![A picture showing the limited repetition feature!](output/Final_rep.png)
+![Final_rep](https://github.com/user-attachments/assets/acc2a0a3-d39c-46c1-8516-bfdd4e3aae7f)
 
 
 Creative Artifact
@@ -131,17 +124,18 @@ I was very unsure what to do for my creativr artifact, so I implemented majority
 It reminds me of like an amusement park, but can also be called abstract. I have the sub operation, the smooth union operation, the displacement operation, as well as just the regular union. I was going to add limited repetition but was unable to implement it in a way that I liked. However, other outputs in the project, showcase cool things I did with limited repetition. 
 
 
-![A picture showing the creative artifact!](output/Final_creative_artifact.png)
-
+![Final_creative_artifact](https://github.com/user-attachments/assets/c3036dc4-4a6b-45a2-8b09-8d9e66ef0fcd)
 
 
 
 Other Cool Things I Created!!
 --------------------------------
 
-![Extra Feature!](output/Final_test.png)
+![Final_test](https://github.com/user-attachments/assets/30627142-c358-4c28-a3fa-96c2545783ce)
 
-![Extra Feature!](output/Final_uni2.png)
+
+![Final_uni2](https://github.com/user-attachments/assets/c238051a-9e62-47ce-bd61-1775299eeae6)
+
 
 
 
@@ -172,56 +166,3 @@ Creative Artifact:
 The final creative artifact, where I combined all these features, was the culmination of my work. It demonstrated the full potential of the ray marching renderer and allowed me to express the artistic side of computer graphics. By tweaking the displacement and combining various operations, I was able to create a scene that was both technically complex and aesthetically pleasing.
 
 Overall, I thoroughly enjoyed this project and would love to keep working in it. I will for sure be creating more scenes using this ray marching project, and hopefully be able to animate it as well. 
-
-
-
-
-
-
-
-
-<!--   Feel free to modify the following to fit a theme of your choosing   -->
-<link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet"> <!-- a sans-serif font -->
-<style>  /* A TAYLOR-INSPIRED THEME */
-    body {font-family:'Open Sans',sans-serif;}
-    .md a:link, .md a:visited {color:hsl(252, 88%, 34%); font-family:'Open Sans',sans-serif;}
-    .md table.table th {background-color:hsl(252, 25%, 65%);}
-    .md .noheader th {display:none;}
-    .md .firstcol td:first-child {white-space:pre;color:white;vertical-align:top;font-weight:bold;border-color:black;background:hwb(182 32% 47%);}
-    .md .firstcol tr:nth-child(even) td:first-child {background:hsl(333, 23%, 44%);}
-</style>
-
-
-<!-- ****************************** -->
-<!--    Leave the content below     -->
-<!-- ****************************** -->
-
-<!-- The script and style below are added for clarity and to workaround a bug -->
-<script>
-    // this is a hack to workaround a bug in Markdeep+Mathjax, where
-    // `$`` is automatically converted to `\(`` and `\)`` too soon.
-    // the following code will replace the innerHTML of all elements
-    // with class "dollar" with a dollar sign.
-    setTimeout(function() {
-        var dollars = document.getElementsByClassName('dollar');
-        for(var i = 0; i < dollars.length; i++) {
-            dollars[i].innerHTML = '&#' + '36;'; // split to prevent conversion to $
-        }
-    }, 1000);
-</script>
-<style>
-    /* adding some styling to <code> tags (but not <pre><code> coding blocks!) */
-    :not(pre) > code {
-        background-color: rgba(0,0,0,0.05);
-        outline: 1px solid rgba(0,0,0,0.15);
-        margin-left: 0.25em;
-        margin-right: 0.25em;
-    }
-    /* fixes table of contents of medium-length document from looking weird if admonitions are behind */
-    .md div.mediumTOC { background: white; }
-    .md div.admonition { position: initial !important; }
-</style>
-
-<!--   Leave the following Markdeep formatting code, as this will format your text above to look nice in a wed browser   -->
-
-<script src="https://casual-effects.com/markdeep/latest/markdeep.min.js"></script><!-- Markdeep: --><style class="fallback">body{visibility:hidden;white-space:pre;font-family:monospace}</style><script src="markdeep.min.js"></script><script src="https://casual-effects.com/markdeep/latest/markdeep.min.js?"></script><script>window.alreadyProcessedMarkdeep||(document.body.style.visibility="visible")</script>

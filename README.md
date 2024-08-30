@@ -32,9 +32,12 @@ time to complete  | 10 Hours
 Final Comments    | Bottom of Page
 </div>
 
+| Month    | Savings |
 | -------- | ------- |
-| Name          | Jada            |
-| Computer + OS | MacBook Pro     |
+| name  | Jada Jones    |
+| OS | MacBookPro     |
+| Language    | VLang    |
+| Text-Editor   | VSCode |
 
 
 Link to resource I used: https://iquilezles.org/articles/raymarchingdf/ 

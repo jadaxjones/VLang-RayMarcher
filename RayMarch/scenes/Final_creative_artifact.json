@@ -1,0 +1,420 @@
+{
+    "ambient_color": {"r":0.2, "g":0.2, "b":0.2},
+    "camera": {
+        "frame": {
+            "eye": {"x":7.0, "y":10.0, "z":10.0},
+            "target": {"x":1.5, "y":0.5, "z":0.0},
+            "up": {"x":0.0, "y":1.0, "z":0.0}
+        }
+    },
+    "surfaces": [
+        {
+            "shape": "sub_op",
+            "frame": {
+                "o": {"x":4.0, "y":0.0, "z":0.0}
+            },
+            "children": [
+                {
+                    "shape": "box",
+                    "radius": 0.8,
+                    "frame": {
+                        "o": {"x":4.0, "y":0.0, "z":0.0}
+                    },
+                    "material": {
+                        "kd": {"r":1, "g":0.0, "b":1}
+                    }
+                },
+                {
+                    "shape": "sphere",
+                    "radius": 1,
+                    "frame": {
+                        "o": {"x":4.0, "y":0.0, "z":0.0}
+                    },
+                    "material": {
+                        "kd": {"r":1, "g":0.5, "b":0.3}
+                    }
+                }
+            ]
+        },
+        {
+            "shape": "smooth_uni",
+            "frame": {
+                "o": {"x":4.0, "y":2.0, "z":0.0}
+            },
+            "k": 0.8,
+            "children": [
+                {
+                    "shape": "sphere",
+                    "radius": 0.5,
+                    "frame": {
+                        "o": {"x":4.5, "y":2.5, "z":0.0}
+                    },
+                    "material": {
+                        "kd": {"r":1, "g":1.0, "b":1}
+                    }
+                },
+                {
+                    "shape": "sphere",
+                    "radius": 0.5,
+                    "frame": {
+                        "o": {"x":4.5, "y":3.4, "z":0.0}
+                    },
+                    "material": {
+                        "kd": {"r":0.2, "g":0.2, "b":0.8}
+                    }
+                }
+            ]
+        },
+        {
+            "shape": "sub_op",
+            "frame": {
+                "o": {"x":2.3094, "y":0.0, "z":3.4641}
+            },
+            "children": [
+                {
+                    "shape": "box",
+                    "radius": 0.8,
+                    "frame": {
+                        "o": {"x":2.3094, "y":0.0, "z":3.4641}
+                    },
+                    "material": {
+                        "kd": {"r":0.0, "g":0.0, "b":1}
+                    }
+                },
+                {
+                    "shape": "sphere",
+                    "radius": 1,
+                    "frame": {
+                        "o": {"x":2.3094, "y":0.0, "z":3.4641}
+                    },
+                    "material": {
+                        "kd": {"r":1, "g":0.5, "b":0.3}
+                    }
+                }
+            ]
+        },
+        {
+            "shape": "smooth_uni",
+            "frame": {
+                "o": {"x":2.3094, "y":2.0, "z":3.4641}
+            },
+            "k": 0.8,
+            "children": [
+                {
+                    "shape": "sphere",
+                    "radius": 0.5,
+                    "frame": {
+                        "o": {"x":2.8094, "y":2.5, "z":3.4641}
+                    },
+                    "material": {
+                        "kd": {"r":1, "g":1.0, "b":1}
+                    }
+                },
+                {
+                    "shape": "sphere",
+                    "radius": 0.5,
+                    "frame": {
+                        "o": {"x":2.8094, "y":3.4, "z":3.4641}
+                    },
+                    "material": {
+                        "kd": {"r":0.2, "g":0.2, "b":0.8}
+                    }
+                }
+            ]
+        },
+        {
+            "shape": "sub_op",
+            "frame": {
+                "o": {"x":-2.3094, "y":0.0, "z":3.4641}
+            },
+            "children": [
+                {
+                    "shape": "box",
+                    "radius": 0.8,
+                    "frame": {
+                        "o": {"x":-2.3094, "y":0.0, "z":3.4641}
+                    },
+                    "material": {
+                        "kd": {"r":0.0, "g":1.0, "b":0}
+                    }
+                },
+                {
+                    "shape": "sphere",
+                    "radius": 1,
+                    "frame": {
+                        "o": {"x":-2.3094, "y":0.0, "z":3.4641}
+                    },
+                    "material": {
+                        "kd": {"r":1, "g":0.5, "b":0.3}
+                    }
+                }
+            ]
+        },
+        {
+            "shape": "smooth_uni",
+            "frame": {
+                "o": {"x":-2.3094, "y":2.0, "z":3.4641}
+            },
+            "k": 0.8,
+            "children": [
+                {
+                    "shape": "sphere",
+                    "radius": 0.5,
+                    "frame": {
+                        "o": {"x":-2.3094, "y":2.5, "z":3.4641}
+                    },
+                    "material": {
+                        "kd": {"r":1, "g":1.0, "b":1}
+                    }
+                },
+                {
+                    "shape": "sphere",
+                    "radius": 0.5,
+                    "frame": {
+                        "o": {"x":-2.3094, "y":3.4, "z":3.4641}
+                    },
+                    "material": {
+                        "kd": {"r":0.2, "g":0.2, "b":0.8}
+                    }
+                }
+            ]
+        },
+        {
+            "shape": "sub_op",
+            "frame": {
+                "o": {"x":-4.0, "y":0.0, "z":0.0}
+            },
+            "children": [
+                {
+                    "shape": "box",
+                    "radius": 0.8,
+                    "frame": {
+                        "o": {"x":-4.0, "y":0.0, "z":0.0}
+                    },
+                    "material": {
+                        "kd": {"r":1.0, "g":0.0, "b":0}
+                    }
+                },
+                {
+                    "shape": "sphere",
+                    "radius": 1,
+                    "frame": {
+                        "o": {"x":-4.0, "y":0.0, "z":0.0}
+                    },
+                    "material": {
+                        "kd": {"r":1, "g":0.5, "b":0.3}
+                    }
+                }
+            ]
+        },
+        {
+            "shape": "smooth_uni",
+            "frame": {
+                "o": {"x":-4.0, "y":2.0, "z":0.0}
+            },
+            "k": 0.8,
+            "children": [
+                {
+                    "shape": "sphere",
+                    "radius": 0.5,
+                    "frame": {
+                        "o": {"x":-3.5, "y":2.5, "z":0.0}
+                    },
+                    "material": {
+                        "kd": {"r":1, "g":1.0, "b":1}
+                    }
+                },
+                {
+                    "shape": "sphere",
+                    "radius": 0.5,
+                    "frame": {
+                        "o": {"x":-3.5, "y":3.4, "z":0.0}
+                    },
+                    "material": {
+                        "kd": {"r":0.2, "g":0.2, "b":0.8}
+                    }
+                }
+            ]
+        },
+        {
+            "shape": "sub_op",
+            "frame": {
+                "o": {"x":-2.3094, "y":0.0, "z":-3.4641}
+            },
+            "children": [
+                {
+                    "shape": "box",
+                    "radius": 0.8,
+                    "frame": {
+                        "o": {"x":-2.3094, "y":0.0, "z":-3.4641}
+                    },
+                    "material": {
+                        "kd": {"r":1.0, "g":1.0, "b":0}
+                    }
+                },
+                {
+                    "shape": "sphere",
+                    "radius": 1,
+                    "frame": {
+                        "o": {"x":-2.3094, "y":0.0, "z":-3.4641}
+                    },
+                    "material": {
+                        "kd": {"r":1, "g":0.5, "b":0.3}
+                    }
+                }
+            ]
+        },
+        {
+            "shape": "smooth_uni",
+            "frame": {
+                "o": {"x":-2.3094, "y":2.0, "z":-3.4641}
+            },
+            "k": 0.8,
+            "children": [
+                {
+                    "shape": "sphere",
+                    "radius": 0.5,
+                    "frame": {
+                        "o": {"x":-1.8094, "y":2.5, "z":-3.4641}
+                    },
+                    "material": {
+                        "kd": {"r":1, "g":1.0, "b":1}
+                    }
+                },
+                {
+                    "shape": "sphere",
+                    "radius": 0.5,
+                    "frame": {
+                        "o": {"x":-1.8094, "y":3.4, "z":-3.4641}
+                    },
+                    "material": {
+                        "kd": {"r":0.2, "g":0.2, "b":0.8}
+                    }
+                }
+            ]
+        },
+        {
+            "shape": "sub_op",
+            "frame": {
+                "o": {"x":2.3094, "y":0.0, "z":-3.4641}
+            },
+            "children": [
+                {
+                    "shape": "box",
+                    "radius": 0.8,
+                    "frame": {
+                        "o": {"x":2.3094, "y":0.0, "z":-3.4641}
+                    },
+                    "material": {
+                        "kd": {"r":0.0, "g":1.0, "b":1}
+                    }
+                },
+                {
+                    "shape": "sphere",
+                    "radius": 1,
+                    "frame": {
+                        "o": {"x":2.3094, "y":0.0, "z":-3.4641}
+                    },
+                    "material": {
+                        "kd": {"r":1, "g":0.5, "b":0.3}
+                    }
+                }
+            ]
+        },
+        {
+            "shape": "smooth_uni",
+            "frame": {
+                "o": {"x":2.3094, "y":2.0, "z":-3.4641}
+            },
+            "k": 0.8,
+            "children": [
+                {
+                    "shape": "sphere",
+                    "radius": 0.5,
+                    "frame": {
+                        "o": {"x":2.8094, "y":2.5, "z":-3.4641}
+                    },
+                    "material": {
+                        "kd": {"r":1, "g":1.0, "b":1}
+                    }
+                },
+                {
+                    "shape": "sphere",
+                    "radius": 0.5,
+                    "frame": {
+                        "o": {"x":2.8094, "y":3.4, "z":-3.4641}
+                    },
+                    "material": {
+                        "kd": {"r":0.2, "g":0.2, "b":0.8}
+                    }
+                }
+            ]
+        },
+        {
+            "shape": "box",
+            "frame": {
+                "o": {"x":0.0, "y":-1.0, "z":0.0}
+            },
+            "length": 6,
+            "width": 0.1,
+            "height": 6,
+            "material": {
+                "kd": {"r":0.2, "g":0.4, "b":0.6}
+            }
+        },
+        {
+            "shape": "displace2",
+            "frame": {
+                "o": {"x":0.0, "y":0.0, "z":0.0}
+            },
+            "children" : [
+                {
+                    "shape": "sphere",
+                    "frame": {
+                        "o": {"x":0.0, "y":2.0, "z":0.0}
+                    },
+                    "radius": 1.0,
+                    "material": {
+                        "kd": {"r":0.2, "g":0.2, "b":0.8}
+                    }
+                }
+            ]
+        },
+        {
+            "shape": "torus",
+            "radius": 4.0,
+            "minor_radius": 0.05,
+            "frame": { "o": {"x":0,"y":0,"z":0} },
+            "material": {
+              "kd": {"r":1, "g":1, "b":1}
+            }
+        },
+        {
+            "shape": "torus",
+            "radius": 6.0,
+            "minor_radius": 0.05,
+            "frame": { "o": {"x":0,"y":5,"z":0} },
+            "material": {
+              "kd": {"r":1, "g":1, "b":1}
+            }
+        },
+        {
+            "shape": "sphere",
+            "radius": 1.2,
+            "frame": {
+                "o": {"x":0.0, "y":2.0, "z":0.0}
+            },
+            "material": {
+                "kd": {"r":1.0, "g":0.0, "b":0.0}
+            }
+        }   
+    ],
+    "lights": [
+        { 
+            "frame": { 
+                "o": {"x":1,"y":7,"z":12} 
+            }, 
+            "kl": {"r":100,"g":100,"b":100} 
+        }
+    ]
+}

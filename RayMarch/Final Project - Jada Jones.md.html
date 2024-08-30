@@ -1,0 +1,1099 @@
+**Final Project - Jada Jones**
+
+
+
+Purpose
+========
+
+__Purpose/Goal:__
+We had many options for the final project in CS77. We could have worked with a partner or group, or by ourselves. We also 
+had the option to implement more aspects to previous assignments, like the rasterization or the raytrace project. Although I enjoyed 
+both of those assignments thoroughly I decided to implement my own renderer and create a raymarching renderer. 
+
+
+
+
+Submission
+-----------
+Each feature of the project is given its own section in the form of a demo. This will show the specific code that created the demo, as well 
+as the json file and a picture demonstrating the feature. At the bottom there will be a section of the full code. Each feature will have a short 
+reflection with detailing, how the feature was created, and changes I had to make to scene files or other files in order to get the feature to be 
+implemented correctly. 
+
+
+Author
+=============
+
+<!-- Note: wrapping table in div.noheader will hide the table's header -->
+<!-- Note: wrapping table in div.firstcol will style the first column different from other columns -->
+<div class="noheader firstcol">
+                  |             
+------------------|-------------
+name              | Jada Jones
+computer + OS     | My MacBook Pro
+time to complete  | 10 Hours
+Final Comments    | Bottom of Page
+</div>
+
+
+Link to resource I used: https://iquilezles.org/articles/raymarchingdf/ 
+
+
+What is Ray Marching
+=================
+Ray marching is rendering technique that iteratively traversing rays to render scenes with signed distance functions. It uses these SDFs to determine a maximum safe step-size. It sees how far it can go without touching an object. This allows you to do cool things with the geometry that is in the scenes. Subtract objects from one another, unify them through union, and even get the intersection of two objects that are touching. There are so many signed distance functions for different shapes, allowing you to create cool scenes and cretae weird geometry. 
+
+
+
+Project Features
+================
+
+
+Subtraction
+--------------------------------
+__Reflection:__ For the subtraction feature using the website that Inigo Quilez has helped alot. The implementation 
+was pretty straight forward and allowed for me to easily create a function. To actually get the objects to be subtracted from 
+one another, I created an object in the scene.v file that was called sub_op. I did this for all of the objects in the objects_sdf 
+function. This enabled me to just call the op_subtraction function inside of the objects_sdf function. What you will see in majority 
+of the functions and the objects, is that there is an extra surface. This is because it would not allow me to get the surface color of each 
+object, if there were more than one in a scene, in the scene. It would just pick the larger objects color. Have it return the distance and 
+the surface, allowed me to work around that. 
+
+Code for subtraction: 
+~~~~
+//subtraction operation
+fn op_subtraction (d1 f64, d2 f64) f64 {
+    return math.max(-d1, d2)
+}
+
+//object_sdf
+.sub_op {
+    if surface.children.len >= 2 {
+        d1, s1 := objects_sdf(sample_point, surface.children[1])
+        d2, s2 := objects_sdf(sample_point, surface.children[0])
+        dist := op_subtraction(d1, d2)
+        if dist == d1 {
+            return dist, s1
+        } else {
+            return dist, s2
+        }
+    }
+}
+~~~~
+
+Json File: 
+
+~~~~
+{
+    "ambient_color": {"r":0.2, "g":0.2, "b":0.2},
+    "camera": {
+        "frame": {
+            "eye":    {"x":2.0, "y":4.0, "z":4.0},
+            "target": {"x":0.0, "y":0.5, "z":0.0},
+            "up":     {"x":0.0, "y":1.0, "z":0.0}
+        }
+    },
+    "surfaces": [
+        {
+            "shape": "sub_op",
+            "frame": {
+                "o": {"x":0.0, "y":0.0, "z":0.0}
+            },
+            "children": [
+                {
+                    "shape": "box",
+                    "radius": 0.8,
+                    "frame": {
+                        "o": {"x": 0.0, "y": 0.0, "z":0.0}
+                    },
+                    "material": {
+                        "kd": {"r":1, "g":0.0, "b":1}
+                    }
+                },
+                {
+                    "shape": "sphere",
+                    "radius": 1,
+                    "frame": {
+                        "o": {"x":0.0, "y":0.0, "z":0.0}
+                    },
+                    "material": {
+                        "kd": {"r":1, "g":0.5, "b":0.3}
+                    }
+                }
+            ]
+        }
+    ],
+    "lights": [
+        { 
+            "frame": { 
+                "o": {"x":1,"y":7,"z":12} 
+            }, 
+            "kl": {"r":100,"g":100,"b":100} 
+        }
+    ]
+}
+~~~~
+
+![A picture showing the subtraction feature!](output/Final_sub.png)
+
+
+Intersection
+--------------------------------
+__Reflection:__For intersection, this implementation was also pretty easy and straightforward. It was like once 
+you got one implementation down, just changing one thing about another allowed it to all come together. This takes the max
+of d1 and d2. When I think about this, I think about a venn diagram, specifically the middel part of the venn diagram, where 
+the two circles intersect. I again, went into scene.v and created a inter_op object. 
+
+Code for Intersection: 
+
+~~~~
+// function for intersection
+
+fn op_intersection (d1 f64, d2 f64) f64 {
+    return math.max(d1, d2)
+}
+
+//intersection in objects_sdf
+
+.inter_op {
+    if surface.children.len >= 2 {
+        d1, s1 := objects_sdf(sample_point, surface.children[1])
+        d2, s2 := objects_sdf(sample_point, surface.children[0])
+        dist := op_intersection(d1, d2)
+        if dist == d1 {
+            return dist, s1
+        } else {
+            return dist, s2
+        }
+    }
+}
+~~~~
+
+Json File: 
+
+~~~~
+{
+    "ambient_color": {"r":0.2, "g":0.2, "b":0.2},
+    "camera": {
+        "frame": {
+            "eye":    {"x":2.0, "y":4.0, "z":4.0},
+            "target": {"x":0.0, "y":0.5, "z":0.0},
+            "up":     {"x":0.0, "y":1.0, "z":0.0}
+        }
+    },
+    "surfaces": [
+        {
+            "shape": "inter_op",
+            "frame": {
+                "o": {"x": 0.0, "y": 0.0, "z":0.0}
+            },
+            "children": [
+                {
+                    "shape": "sphere",
+                    "radius": 1.0,
+                    "frame": {
+                        "o": {"x": 0.0, "y": 0.0, "z":0.0}
+                    },
+                    "material": {
+                        "kd": {"r":1, "g":0.0, "b":0.0}
+                    }
+                },
+                {
+                    "shape": "box",
+                    "radius": 0.5,
+                    "frame": {
+                        "o": {"x":0.0, "y":0.0, "z":0.7}
+                    },
+                    "material": {
+                        "kd": {"r":0.0, "g":1.0, "b":0.0}
+                    }
+                }
+            ]
+        }
+    ],
+    "lights": [
+        { 
+            "frame": { 
+                "o": {"x":1,"y":7,"z":12} 
+            }, 
+            "kl": {"r":100,"g":100,"b":100} 
+        }
+    ]
+}
+~~~~
+
+![A picture showing the intersection feature!](output/Final_inter.png)
+
+
+Union
+--------------------------------
+__Reflection:__For the union implementation, it was easy to implement, but was confusing in the sense, that
+you could just place an object on top of another without having to do the function for the implementation. 
+However, when it came to the smoothing of the union I saw the benefit greatly. This implementation was good
+but I felt the subtraction and intersection implementations were cooler. 
+
+Code for Union:
+
+~~~~
+//function for Union
+
+fn op_union (d1 f64, d2 f64) f64 {
+    return math.min(d1, d2)
+}
+
+//Union in objects_sdf
+
+.uni_op {
+    if surface.children.len >= 2 {
+        d1, s1 := objects_sdf(sample_point, surface.children[0])
+        d2, s2 := objects_sdf(sample_point, surface.children[1])
+        dist := op_union(d1, d2)
+        if dist == d1 {
+            return dist, s1
+        } else {
+            return dist, s2
+        }
+    }
+}
+~~~~
+
+Json File: 
+
+~~~~
+{
+    "ambient_color": {"r":0.2, "g":0.2, "b":0.2},
+    "camera": {
+        "frame": {
+            "eye":    {"x":4.0, "y":0.5, "z":3.0},
+            "target": {"x":0.0, "y":-0.5, "z":0.0},
+            "up":     {"x":0.0, "y":1.0, "z":0.0}
+        }
+    },
+    "surfaces": [
+        {
+            "shape": "uni_op",
+            "frame": {
+                "o": {"x":0.0, "y":0.5, "z":0.0}
+            },
+            "children": [
+                {
+                    "shape": "box",
+                    "radius": 0.8,
+                    "frame": {
+                        "o": {"x": 0.0, "y": -1.4, "z":0.0}
+                    },
+                    "material": {
+                        "kd": {"r":1, "g":0.0, "b":1}
+                    },
+                    "length": 0.8,
+                    "width": 0.3,
+                    "height": 0.5
+                },
+                {
+                    "shape": "sphere",
+                    "radius": 0.4,
+                    "frame": {
+                        "o": {"x":0.0, "y":-1.1, "z":0.0}
+                    },
+                    "material": {
+                        "kd": {"r":1, "g":0.5, "b":0.3}
+                    }
+                }
+            ]
+        }
+    ],
+    "lights": [
+        { 
+            "frame": { 
+                "o": {"x":1,"y":7,"z":12} 
+            }, 
+            "kl": {"r":100,"g":100,"b":100} 
+        }
+    ]
+}
+~~~~
+
+![A picture showing the union feature!](output/Final_uni.png)
+
+
+Displacement
+--------------------------------
+__Reflection:__The displacement implementation was pretty cool in the sense that you could essentually have 
+any type of displacement. Using sin and cosine, as well as different values, would give you different types of displacement. 
+I tried out multiple variations and will use some of them in the creative artifact. One thing I noticed is that if i get rid of 
+the 0.1 at the beginning of the return in the function for displacement, then it gives a weird design. I will use that variation for the final creative artifact.
+
+
+Code for Displacement: 
+
+~~~~
+//Function for displacement
+
+fn displacement(sample_point Point) f64 {
+    return 0.1 * math.sin(sample_point.x * 20.0) * math.sin(sample_point.y * 20.0) * math.sin(sample_point.z * 20.0)
+}
+
+//Displacement in objects_sdf
+
+.displace_op {
+    d1, s1 := objects_sdf(sample_point, surface.children[0])
+    d2 := displacement(sample_point)
+    dist := d1 + d2
+    return dist, surface
+}
+~~~~
+
+Json File: 
+
+~~~~
+{
+    "ambient_color": {"r":0.2, "g":0.2, "b":0.2},
+    "camera": {
+        "frame": {
+            "eye":    {"x":4.0, "y":0.5, "z":4.0},
+            "target": {"x":0.0, "y":0.5, "z":-1.0},
+            "up":     {"x":0.0, "y":1.0, "z":0.0}
+        }
+    },
+    "surfaces": [
+        {
+            "shape": "displace_op",
+            "frame": {
+                "o": {"x":0.0, "y":0.0, "z":0.0}
+            },
+            "children" : [
+                {
+                    "shape": "sphere",
+                    "frame": {
+                        "o": {"x":0.0, "y":1.0, "z":0.0}
+                    },
+                    "length": 0.7,
+                    "width": 0.4,
+                    "height": 0.4,
+                    "material": {
+                        "kd": {"r":0.2, "g":0.2, "b":0.8}
+                    }
+                }
+            ]
+        }   
+    ],
+    "lights": [
+        { 
+            "frame": { 
+                "o": {"x":8,"y":2,"z":6} 
+            }, 
+            "kl": {"r":100,"g":100,"b":100} 
+        }
+    ]
+}
+~~~~
+
+![A picture showing the displacement feature!](output/Final_displace.png)
+
+
+Smoothing Union
+--------------------------------
+__Reflection:__This I think is my favorite implementation. It was confusing trying to understand the different values, for what
+k, and h are, but after that I was able to fully understand it. At first, it was giving me weird outputs, like big blobs. 
+But then I realized that I needed to add the k value to a feature of a surface. I changed that in the scene.v file so that way
+in json files I could change the k value and it would not be hard coded. Once I did get it, I realized that the colors again
+were not blending. I talked to Professor Denning and he mentioned that we did color blends in a previous assignment. I used that 
+to help me make the blend material for the function. Once I finally got it to work, it was so cool to see. I think this was the 
+best implementation by far because of how cool the color blend looks. I then made a new durface with the blended material, and called
+that in with the distance so that it would take that color rather than two seperate colors of the objects. 
+
+Code for Smoothing Union: 
+
+~~~~
+//Smooth Union Function
+fn op_smooth_uni (d1 f64, d2 f64, k f64) (f64, f64) {
+    mut h := math.clamp(0.5 + 0.5 * (d2 - d1) / k, 0.0, 1.0)
+    dist := mix(d2, d1, h) - k * h * (1.0 - h)
+    return dist, h
+}
+
+//Smoothing Union objects_sdf
+
+.smooth_uni {
+    if surface.children.len >= 2 {
+        d1, s1 := objects_sdf(sample_point, surface.children[1])
+        d2, s2 := objects_sdf(sample_point, surface.children[0])
+        dist, h := op_smooth_uni(d1, d2, surface.k)
+
+        // Blend materials
+        blended_material := gfx.Material {
+            kd: s1.material.kd.scale(1.0 - h).add(s2.material.kd.scale(h)),
+            ks: s1.material.ks.scale(1.0 - h).add(s2.material.ks.scale(h)),
+            kr: s1.material.kr.scale(1.0 - h).add(s2.material.kr.scale(h)),
+            n: s1.material.n * (1.0 - h) + s2.material.n * h
+        }
+
+        blended_surface := Surface {
+            shape: surface.shape,
+            frame: surface.frame,
+            material: blended_material,
+        }
+        return dist, blended_surface
+    }
+}
+~~~~
+
+Json File: 
+
+~~~~
+{
+    "ambient_color": {"r":0.2, "g":0.2, "b":0.2},
+    "camera": {
+        "frame": {
+            "eye":    {"x":4.0, "y":0.5, "z":3.0},
+            "target": {"x":0.0, "y":-0.5, "z":0.0},
+            "up":     {"x":0.0, "y":1.0, "z":0.0}
+        }
+    },
+    "surfaces": [
+        {
+            "shape": "smooth_uni",
+            "frame": {
+                "o": {"x":0.0, "y":0.5, "z":0.0}
+            },
+            "k":0.7,
+            "children": [
+                {
+                    "shape": "box",
+                    "radius": 0.8,
+                    "frame": {
+                        "o": {"x": 0.0, "y": -1.4, "z":0.0}
+                    },
+                    "material": {
+                        "kd": {"r":1, "g":0.0, "b":1}
+                    },
+                    "length": 0.8,
+                    "width": 0.3,
+                    "height": 0.5
+                },
+                {
+                    "shape": "sphere",
+                    "radius": 0.7,
+                    "frame": {
+                        "o": {"x":0.0, "y":-0.8, "z":0.0}
+                    },
+                    "material": {
+                        "kd": {"r":1, "g":0.5, "b":0.3}
+                    }
+                }
+            ]
+        }
+    ],
+    "lights": [
+        { 
+            "frame": { 
+                "o": {"x":1,"y":7,"z":12} 
+            }, 
+            "kl": {"r":100,"g":100,"b":100} 
+        }
+    ]
+}
+~~~~
+
+![A picture showing the smooth union feature!](output/Final_smooth_uni.png)
+
+
+Limited Repetition
+--------------------------------
+__Reflection:__For limited repetition, I ran into some errors regarding the L. In the example on the website, they 
+have l being a vector, I was running into a lot of errors with that as you cannot negate certain things, or use a '-'. 
+I changed it to a point and added it to the scene.v as an attribute under the surfaces. This allows for anyone in a json 
+file to change how many repetitions there are. I was originally going to do infinite repetitions, but I thought that this 
+would one taje forever to run, and take up alot of space on my laptop. And for what I am doing the limited repetition 
+works perfectly. Also with this you can add multuiple operations under it. I have also added subtraction operations with a box
+and a sphere under it and had that as limited repetition as well. 
+
+Code for Limited Repetition: 
+
+~~~~
+//Function for Limited Repetition
+
+fn op_repetition(sample_point Point, s f64, l Point, surface Surface) (f64, Surface) {
+    clamp_x := math.clamp(math.round(sample_point.x / s), -l.x, l.x)
+    clamp_y := math.clamp(math.round(sample_point.y / s), -l.y, l.y)
+    clamp_z := math.clamp(math.round(sample_point.z / s), -l.z, l.z)
+
+    qx := sample_point.x - s * clamp_x
+    qy := sample_point.y - s * clamp_y
+    qz := sample_point.z - s * clamp_z
+    
+    q := Point{qx, qy, qz} 
+
+    dist, rep_surface := objects_sdf(q, surface)
+    return dist, rep_surface
+}
+
+
+//Limtied Repetition in objects_sdf
+
+.limited_op {
+    if surface.children.len >= 1 {
+        return op_repetition(sample_point, surface.s, surface.l, surface.children[0])
+    }
+}
+~~~~
+
+Json File: 
+
+~~~~
+{
+    "ambient_color": {"r":0.2, "g":0.2, "b":0.2},
+    "camera": {
+        "frame": {
+            "eye":    {"x":7.0, "y":4.0, "z":7.0},
+            "target": {"x":0.0, "y":0.5, "z":0.0},
+            "up":     {"x":0.0, "y":1.0, "z":0.0}
+        }
+    },
+    "surfaces": [
+        {
+            "shape": "limited_op",
+            "frame": {
+                "o": {"x":0.0, "y":0.0, "z":0.0}
+            },
+            "s": 1.0,
+            "l": {"x": 5.0, "y": 5.0, "z": 5},
+            "children" : [
+                {
+                    "shape": "box",
+                    "frame": {
+                        "o": {"x":0.0, "y":0.0, "z":0.0}
+                    },
+                    "length": 0.2,
+                    "width": 0.2,
+                    "height": 0.2,
+                    "material": {
+                        "kd": {"r":0.525, "g":0.969, "b":0.969}
+                    }
+                }
+            ]
+        }   
+    ],
+    "lights": [
+        { 
+            "frame": { 
+                "o": {"x":1,"y":7,"z":12} 
+            }, 
+            "kl": {"r":100,"g":100,"b":100} 
+        }
+    ]
+}
+~~~~
+
+![A picture showing the limited repetition feature!](output/Final_rep.png)
+
+
+Creative Artifact
+======================
+I was very unsure what to do for my creativr artifact, so I implemented majority of every feature in the artifact. 
+It reminds me of like an amusement park, but can also be called abstract. I have the sub operation, the smooth union operation, the displacement operation, as well as just the regular union. I was going to add limited repetition but was unable to implement it in a way that I liked. However, other outputs in the project, showcase cool things I did with limited repetition. 
+
+
+![A picture showing the creative artifact!](output/Final_creative_artifact.png)
+
+
+
+
+Other Cool Things I Created!!
+--------------------------------
+
+![Extra Feature!](output/Final_test.png)
+
+![Extra Feature!](output/Final_uni2.png)
+
+
+
+Full Code
+======================
+
+__Full Code:__
+
+~~~~
+module main
+import os
+import math
+import gfx
+import rand 
+import gg 
+
+const (
+    scene_filenames = [
+        'Final_ball',
+        'Final_cube'
+        'Final_sub',
+        'Final_uni',
+        'Final_inter'
+        'Final_capsule',
+        'Final_smooth_uni',
+        'Final_displace',
+        'Final_rep', 
+        'Final_test',
+        'Final_test2',
+        'Final_creative_artifact',
+    ]
+)
+
+type Point     = gfx.Point
+type Vector    = gfx.Vector
+type Direction = gfx.Direction
+type Normal    = gfx.Normal
+type Ray       = gfx.Ray
+type Color     = gfx.Color
+type Image     = gfx.Image
+
+type Intersection = gfx.Intersection
+type Surface      = gfx.Surface
+type Scene        = gfx.Scene
+
+const (
+    max_march_steps = 225
+    min_dist = 0.0
+    max_dist = 100.0
+    epsilon = 0.01
+    width = 400
+    height = 400
+)
+
+fn op_subtraction (d1 f64, d2 f64) f64 {
+    return math.max(-d1, d2)
+}
+
+fn op_union (d1 f64, d2 f64) f64 {
+    return math.min(d1, d2)
+}
+
+fn op_intersection (d1 f64, d2 f64) f64 {
+    return math.max(d1, d2)
+}
+
+fn mix(a f64, b f64, t f64) f64 {
+    return a * (1.0 - t) + b * t
+}
+
+
+fn op_smooth_uni (d1 f64, d2 f64, k f64) (f64, f64) {
+    mut h := math.clamp(0.5 + 0.5 * (d2 - d1) / k, 0.0, 1.0)
+    dist := mix(d2, d1, h) - k * h * (1.0 - h)
+    return dist, h
+}
+
+
+fn displacement(sample_point Point) f64 {
+    return 0.1 * math.sin(sample_point.x * 20.0) * math.sin(sample_point.y * 20.0) * math.sin(sample_point.z * 20.0)
+}
+
+fn displacement2(sample_point Point) f64 {
+    return math.sin(sample_point.x * 20.0) * math.sin(sample_point.y * 20.0) * math.sin(sample_point.z * 20.0)
+}
+
+
+fn op_repetition(sample_point Point, s f64, l Point, surface Surface) (f64, Surface) {
+    clamp_x := math.clamp(math.round(sample_point.x / s), -l.x, l.x)
+    clamp_y := math.clamp(math.round(sample_point.y / s), -l.y, l.y)
+    clamp_z := math.clamp(math.round(sample_point.z / s), -l.z, l.z)
+
+    qx := sample_point.x - s * clamp_x
+    qy := sample_point.y - s * clamp_y
+    qz := sample_point.z - s * clamp_z
+    
+    q := Point{qx, qy, qz} 
+
+    dist, rep_surface := objects_sdf(q, surface)
+    return dist, rep_surface
+}
+
+
+
+fn objects_sdf (sample_point Point, surface Surface) (f64, Surface) {
+    match surface.shape {
+        .sphere {
+            return surface.frame.o.distance_to(sample_point) - surface.radius, surface
+        }
+        .box {
+            p_vector := (surface.frame.w2l_point(sample_point)).as_vector()
+            abs_p_vector := Vector {
+                math.abs(p_vector.x),
+                math.abs(p_vector.y),
+                math.abs(p_vector.z)
+            }
+            b := Vector {
+                x: surface.length,
+                y: surface.width,
+                z: surface.height
+            }
+            q := (abs_p_vector).sub(b)
+            out_dist := Vector {
+                math.max(q.x, 0),
+                math.max(q.y, 0),
+                math.max(q.z, 0)
+            }.length()
+
+             in_dist := math.min(math.max(q.x, math.max(q.y, q.z)), 0)
+        //     //return math.max(q, 0.0) + math.min(math.max(q.x, math.max(q.y, q.z)), 0).magnitude()
+            //box_sdf := out_dist + in_dist
+            return out_dist + in_dist, surface
+        }
+
+        .capsule {
+            mut p_y := surface.frame.w2l_point(sample_point).as_vector()
+            p_y = Vector{p_y.x, p_y.y - math.clamp(p_y.y, 0.0, surface.height), p_y.z}
+            return p_y.length() - surface.radius, surface
+        }
+
+        .torus {
+            p := surface.frame.w2l_point(sample_point).as_vector()
+            q := Vector{
+                x: Vector{p.x, 0.0, p.z}.length() - surface.radius,
+                y: p.y,
+                z: 0.0,
+            }
+            return q.length() - surface.minor_radius, surface
+        }
+
+
+        .sub_op {
+            if surface.children.len >= 2 {
+                d1, s1 := objects_sdf(sample_point, surface.children[1])
+                d2, s2 := objects_sdf(sample_point, surface.children[0])
+                dist := op_subtraction(d1, d2)
+                if dist == d1 {
+                    return dist, s1
+                } else {
+                    return dist, s2
+                }
+            }
+        }
+        .uni_op {
+            if surface.children.len >= 2 {
+                d1, s1 := objects_sdf(sample_point, surface.children[0])
+                d2, s2 := objects_sdf(sample_point, surface.children[1])
+                dist := op_union(d1, d2)
+                if dist == d1 {
+                    return dist, s1
+                } else {
+                    return dist, s2
+                }
+            }
+        }
+        .inter_op {
+            if surface.children.len >= 2 {
+                d1, s1 := objects_sdf(sample_point, surface.children[1])
+                d2, s2 := objects_sdf(sample_point, surface.children[0])
+                dist := op_intersection(d1, d2)
+                if dist == d1 {
+                    return dist, s1
+                } else {
+                    return dist, s2
+                }
+            }
+        }
+        .smooth_uni {
+            if surface.children.len >= 2 {
+                d1, s1 := objects_sdf(sample_point, surface.children[1])
+                d2, s2 := objects_sdf(sample_point, surface.children[0])
+                dist, h := op_smooth_uni(d1, d2, surface.k)
+    
+                // Blend materials
+                blended_material := gfx.Material {
+                    kd: s1.material.kd.scale(1.0 - h).add(s2.material.kd.scale(h)),
+                    ks: s1.material.ks.scale(1.0 - h).add(s2.material.ks.scale(h)),
+                    kr: s1.material.kr.scale(1.0 - h).add(s2.material.kr.scale(h)),
+                    n: s1.material.n * (1.0 - h) + s2.material.n * h
+                }
+        
+                blended_surface := Surface {
+                    shape: surface.shape,
+                    frame: surface.frame,
+                    material: blended_material,
+                }
+                return dist, blended_surface
+            }
+        }
+        .displace_op {
+            if surface.children.len >= 1 {
+                d1, surface1 := objects_sdf(sample_point, surface.children[0])
+                d2 := displacement(sample_point)
+                dist := d1 + d2
+                return dist, surface
+            }
+        }
+        .displace2 {
+            if surface.children.len >= 1 {
+                d1, surface1 := objects_sdf(sample_point, surface.children[0])
+                d2 := displacement2(sample_point)
+                dist := d1 + d2
+                return dist, surface
+            }
+        }
+        .limited_op {
+            if surface.children.len >= 1 {
+                return op_repetition(sample_point, surface.s, surface.l, surface.children[0])
+            }
+        }
+        else {}
+    } 
+    return max_dist, surface
+}
+
+
+// Render the scene with the objects inside it
+fn scene_sdf(sample_point Point, scene Scene) Intersection {
+	mut closest_dist := max_dist
+    mut closest_inter := gfx.no_intersection
+
+	for surface in scene.surfaces {
+		dist, closest_surface := objects_sdf(sample_point, surface)
+		if dist < closest_dist {
+			closest_dist = dist
+            normal := surface.frame.o.direction_to(sample_point) 
+		    closest_inter = gfx.Intersection {
+			    frame : gfx.frame_oz(sample_point, normal)
+			    surface : closest_surface
+			    distance: closest_dist
+		    }
+		}
+	}
+	return closest_inter
+}
+
+fn raymarch(ray Ray, scene Scene) Intersection {
+	mut depth := min_dist 
+	for _ in 0 .. max_march_steps {
+		intersection := scene_sdf(ray.e.add(ray.d.scale(depth)), scene)
+		if intersection.miss() {
+			return gfx.no_intersection
+		}
+		dist := intersection.distance  //scene_sdf(eye.add(direction.scale(depth)), scene)
+		if dist < epsilon {
+			return intersection
+		}
+		depth = depth + dist
+		if depth >= max_dist {
+			return gfx.no_intersection 
+		}
+	}	
+	return gfx.no_intersection 
+}
+
+
+fn ray_direction(scene Scene, x int, y int) Direction {
+    u := f64(x) / scene.camera.sensor.resolution.width
+    v := 1 - f64(y) / scene.camera.sensor.resolution.height
+    
+    // Calculate the point on the sensor plane
+    q := scene.camera.frame.o.add(
+        scene.camera.frame.x.scale((u - 0.5) * scene.camera.sensor.size.width)
+    ).add(
+        scene.camera.frame.y.scale((v - 0.5) * scene.camera.sensor.size.height)
+    ).sub(
+        scene.camera.frame.z.scale(scene.camera.sensor.distance)
+    )
+    
+    // Calculate the ray direction from the camera origin to the point q
+    ray_dir := scene.camera.frame.o.direction_to(q)
+    
+    return ray_dir
+}
+
+
+
+
+fn light_irradiance (scene Scene, ray Ray) Color {
+	mut accum := gfx.black
+
+	inter := raymarch(ray, scene)
+	if inter.miss() { // if not hit, returns scene's background intesity
+        return scene.background_color
+    }
+
+	ambient := inter.surface.material.kd.mult(scene.ambient_color)
+    accum = accum.add(ambient)
+
+    for light in scene.lights {
+        s_p := light.frame.o.distance_squared_to(inter.frame.o)
+        light_response := light.kl.scale(1 / s_p)
+        light_direction := inter.frame.o.direction_to(light.frame.o) // compute light direction
+        shadow_ray := gfx.Ray {
+            e : inter.frame.o
+            d : light_direction
+            t_min : ray.t_min
+            t_max : inter.frame.o.distance_to(light.frame.o)
+        }
+        // light visibiity 
+        shadow_inter := raymarch(shadow_ray, scene)
+        l := inter.frame.o.direction_to(light.frame.o) // l as direction
+        v := inter.frame.o.direction_to(ray.e) // v as direction
+        //h := l.add(v).normalize() // halfway vector
+        h := (l.as_vector() + v.as_vector()).as_direction()
+        // material response
+        brdf := (inter.surface.material.ks.scale(math.pow(math.max(0.0, inter.frame.z.dot(h)), inter.surface.material.n)))
+
+        accum = accum + light_response.mult(inter.surface.material.kd.add(brdf)).scale(math.abs(inter.frame.z.dot(l))) //* occluded)
+
+    if  inter.surface.material.kr.lightness() > 0 {
+        reflect_direction := ray.d.negate().reflect(inter.frame.z)
+        reflect_ray := gfx.Ray {
+            e : inter.frame.o
+            d : reflect_direction
+            t_min : ray.t_min //f64(10e-5)
+            t_max : ray.t_max // f64(math.inf(1))
+        }
+        reflect_color := light_irradiance(scene, reflect_ray)
+        accum = accum + reflect_color.mult(inter.surface.material.kr)
+
+
+    }
+    //return accum
+
+    }
+    return accum
+}
+
+
+fn main_image(mut image Image, scene Scene) {
+    eye := scene.camera.frame.o
+
+    for y in 0 .. image.size.height {
+        for x in 0 .. image.size.width {
+            // Compute u and v for the current pixel
+            u := f64(x) / scene.camera.sensor.resolution.width
+            v := 1 - f64(y) / scene.camera.sensor.resolution.height
+
+            // Compute the direction for the current pixel using the camera's frame
+            q := scene.camera.frame.o
+                .add(scene.camera.frame.x.scale((u - 0.5) * scene.camera.sensor.size.width))
+                .add(scene.camera.frame.y.scale((v - 0.5) * scene.camera.sensor.size.height))
+                .sub(scene.camera.frame.z.scale(scene.camera.sensor.distance))
+
+            ray_dir := scene.camera.frame.o.direction_to(q)
+            //direction := (eye.sub(q)).direction() // Normalize the direction vector // ray_direction(scene, size, pixel_coords).as_direction()
+
+            ray := Ray{
+                e: eye,
+                d: ray_dir,
+                t_min: min_dist,
+                t_max: max_dist,
+            }
+
+            mut pixel_color := scene.background_color // Default to the background color
+
+            inter := raymarch(ray, scene)
+            if inter.hit() {
+                pixel_color = light_irradiance(scene, ray)
+            }
+
+            image.set_xy(x, y, pixel_color)
+        }
+    }
+}
+
+
+
+
+
+
+
+fn main() {
+    // Make sure images folder exists, because this is where all generated images will be saved
+    os.mkdir_all('output') or { panic(err) }
+
+    for filename in scene_filenames {
+        println('Rendering ${filename}...')
+        scene := gfx.scene_from_file('scenes/${filename}.json')!
+        mut image := Image {
+            size: gfx.Size2i{width, height}
+            data: [][]gfx.Color{len: height, init: []gfx.Color{len: width, init: Color{0.0, 0.0, 0.0}}}
+        }
+        main_image(mut image, scene)
+        image.save_png('output/${filename}.png') //or { panic(err) }
+    }
+
+    println('Done!')
+}
+~~~~
+
+
+Project Reflection
+======================
+Throughout this final project, I had the opportunity to delve deeply into the world of computer graphics, specifically focusing on ray marching. My goal was to create a custom ray marching renderer that could handle various operations such as subtraction, intersection, and union of objects, as well as implement displacement techniques. Reflecting on this journey, I can confidently say that this project was both challenging and rewarding. I knew my implementations were correct based off of feedback from Professor Denning and being able to see Inigo Quilez results. 
+
+Learning Experience:
+The decision to build a ray marching renderer from scratch was driven by my desire to explore a different approach to rendering than what we had previously covered in class, like rasterization and ray tracing. Ray marching intrigued me because of its flexibility in creating complex geometries and its ability to handle signed distance functions (SDFs) efficiently. I started with a solid understanding of ray tracing but quickly realized that ray marching required a different mindset, particularly in how objects and scenes are constructed and rendered.
+
+Challenges:
+One of the main challenges I encountered was ensuring that each operation (subtraction, intersection, union) worked seamlessly within the overall rendering pipeline. Although the mathematical concepts behind these operations are relatively straightforward, implementing them in a way that integrates well with the scene structure required careful consideration. The need to return both distance and surface information to correctly render objects with multiple surfaces was a particularly tricky aspect, as it involved modifying how the renderer interpreted the scene file.
+
+Another challenge was in managing the complexity of the displacement feature. Displacement allows for intricate surface details, but it also introduces the risk of creating artifacts or unexpected results if not handled properly. Fine-tuning the displacement functions to achieve visually appealing results while maintaining performance was a delicate balancing act.
+
+Reflection on Features:
+
+Subtraction: This feature allowed me to create complex shapes by subtracting one object from another. Implementing this was a learning curve, especially in understanding how to correctly handle surface colors and ensuring that the larger object’s surface didn’t dominate the final result. The outcome was satisfying as it enabled me to create more intricate scenes.
+
+Intersection: The intersection operation was conceptually simple but required careful implementation to ensure that only the intersecting parts of the objects were rendered. This feature reminded me of the importance of precision in mathematical operations, especially when dealing with floating-point values in a 3D space.
+
+Union: Union was perhaps the most straightforward of the operations, but its true potential was revealed when combined with the smoothing operations. This feature allowed me to blend objects in a way that wasn’t possible with simple stacking, providing a more cohesive and organic look to the scenes.
+
+Displacement: Displacement was by far the most visually impactful feature I implemented. It allowed for a great deal of creativity, and I enjoyed experimenting with different functions to see how they affected the surface of the objects. The flexibility of this feature was both a blessing and a curse, as it was easy to create something that looked interesting, but difficult to avoid performance issues or rendering artifacts.
+
+Creative Artifact:
+The final creative artifact, where I combined all these features, was the culmination of my work. It demonstrated the full potential of the ray marching renderer and allowed me to express the artistic side of computer graphics. By tweaking the displacement and combining various operations, I was able to create a scene that was both technically complex and aesthetically pleasing.
+
+Overall, I thoroughly enjoyed this project and would love to keep working in it. I will for sure be creating more scenes using this ray marching project, and hopefully be able to animate it as well. 
+
+
+
+
+
+
+
+
+<!--   Feel free to modify the following to fit a theme of your choosing   -->
+<link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet"> <!-- a sans-serif font -->
+<style>  /* A TAYLOR-INSPIRED THEME */
+    body {font-family:'Open Sans',sans-serif;}
+    .md a:link, .md a:visited {color:hsl(252, 88%, 34%); font-family:'Open Sans',sans-serif;}
+    .md table.table th {background-color:hsl(252, 25%, 65%);}
+    .md .noheader th {display:none;}
+    .md .firstcol td:first-child {white-space:pre;color:white;vertical-align:top;font-weight:bold;border-color:black;background:hwb(182 32% 47%);}
+    .md .firstcol tr:nth-child(even) td:first-child {background:hsl(333, 23%, 44%);}
+</style>
+
+
+<!-- ****************************** -->
+<!--    Leave the content below     -->
+<!-- ****************************** -->
+
+<!-- The script and style below are added for clarity and to workaround a bug -->
+<script>
+    // this is a hack to workaround a bug in Markdeep+Mathjax, where
+    // `$`` is automatically converted to `\(`` and `\)`` too soon.
+    // the following code will replace the innerHTML of all elements
+    // with class "dollar" with a dollar sign.
+    setTimeout(function() {
+        var dollars = document.getElementsByClassName('dollar');
+        for(var i = 0; i < dollars.length; i++) {
+            dollars[i].innerHTML = '&#' + '36;'; // split to prevent conversion to $
+        }
+    }, 1000);
+</script>
+<style>
+    /* adding some styling to <code> tags (but not <pre><code> coding blocks!) */
+    :not(pre) > code {
+        background-color: rgba(0,0,0,0.05);
+        outline: 1px solid rgba(0,0,0,0.15);
+        margin-left: 0.25em;
+        margin-right: 0.25em;
+    }
+    /* fixes table of contents of medium-length document from looking weird if admonitions are behind */
+    .md div.mediumTOC { background: white; }
+    .md div.admonition { position: initial !important; }
+</style>
+
+<!--   Leave the following Markdeep formatting code, as this will format your text above to look nice in a wed browser   -->
+
+<script src="https://casual-effects.com/markdeep/latest/markdeep.min.js"></script><!-- Markdeep: --><style class="fallback">body{visibility:hidden;white-space:pre;font-family:monospace}</style><script src="markdeep.min.js"></script><script src="https://casual-effects.com/markdeep/latest/markdeep.min.js?"></script><script>window.alreadyProcessedMarkdeep||(document.body.style.visibility="visible")</script>

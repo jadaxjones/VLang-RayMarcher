@@ -60,7 +60,7 @@ object, if there were more than one in a scene, in the scene. It would just pick
 the surface, allowed me to work around that. 
 
 ![A picture showing the subtraction feature!](output/Final_sub.png)
-![Alt text](relative%20path/to/img.jpg?raw=true"Final_sub")
+![alt text](http://url/to/Final_sub.png)
 
 
 Intersection

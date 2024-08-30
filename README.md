@@ -29,6 +29,7 @@ Author
 <div class="noheader firstcol">
                   |             
 ------------------|-------------
+  
 name              | Jada Jones
 computer + OS     | My MacBook Pro
 time to complete  | 10 Hours

@@ -18,8 +18,9 @@ Submission
 Each feature of the project is given its own section in the form of a demo. This will show the specific code that created the demo, as well 
 as the json file and a picture demonstrating the feature. At the bottom there will be a section of the full code. Each feature will have a short 
 reflection with detailing, how the feature was created, and changes I had to make to scene files or other files in order to get the feature to be 
-implemented correctly. 
+implemented correctly.
 
+|     |  |
 | -------- | ------- |
 | Name  | Jada Jones    |
 | OS | MacBookPro     |

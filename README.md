@@ -21,11 +21,11 @@ reflection with detailing, how the feature was created, and changes I had to mak
 implemented correctly.
 
 
-| Month    | Savings |
+| Name    | Jada Jones |
 | -------- | ------- |
-| January  | $250    |
-| February | $80     |
-| March    | $420    |
+| OS  | MacBookPro    |
+| Language | V Language     |
+| Text-Editor    | VSCode    |
 
 |     |  |
 | -------- | ------- |

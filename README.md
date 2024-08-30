@@ -23,11 +23,7 @@ implemented correctly.
 
 Author
 =============
-
-<!-- Note: wrapping table in div.noheader will hide the table's header -->
-<!-- Note: wrapping table in div.firstcol will style the first column different from other columns -->
-<div class="noheader firstcol">
-                  |             
+                              
 ------------------|-------------
   
 name              | Jada Jones
@@ -35,6 +31,10 @@ computer + OS     | My MacBook Pro
 time to complete  | 10 Hours
 Final Comments    | Bottom of Page
 </div>
+
+| -------- | ------- |
+| Name          | Jada            |
+| Computer + OS | MacBook Pro     |
 
 
 Link to resource I used: https://iquilezles.org/articles/raymarchingdf/ 

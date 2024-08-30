@@ -59,9 +59,7 @@ of the functions and the objects, is that there is an extra surface. This is bec
 object, if there were more than one in a scene, in the scene. It would just pick the larger objects color. Have it return the distance and 
 the surface, allowed me to work around that. 
 
-![A picture showing the subtraction feature!](output/Final_sub.png)
-![alt text](http://url/to/Final_sub.png)
-
+![Final_sub](https://github.com/user-attachments/assets/a5757084-38f4-429f-ab68-0d4c0f875b4f)
 
 Intersection
 --------------------------------
